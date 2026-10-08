@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PhishGuard | URL Security Scanner</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">PhishGuard</div>
+        <span class="badge">CYBERSECURITY</span>
+    </header>
+
+    <main class="container">
+
+        <section class="hero">
+            <p class="eyebrow">URL SECURITY ANALYZER</p>
+
+            <h1>Detect suspicious URLs<br>before you click.</h1>
+
+            <p class="subtitle">
+                PhishGuard analyzes common phishing indicators
+                and provides an easy-to-understand risk assessment.
+            </p>
+
+            <form method="POST" class="scanner">
+                <input
+                    type="text"
+                    name="url"
+                    placeholder="Enter a website URL..."
+                    required
+                >
+
+                <button type="submit">
+                    Scan URL
+                </button>
+            </form>
+        </section>
+
+
+        {% if result %}
+
+        <section class="result">
+
+            <div class="result-header">
+                <div>
+                    <p class="label">SCAN RESULT</p>
+                    <h2>{{ result.risk }}</h2>
+                </div>
+
+                <div class="score">
+                    {{ result.score }}/100
+                </div>
+            </div>
+
+            <p class="scanned-url">
+                {{ result.url }}
+            </p>
+
+            {% if result.reasons %}
+
+            <div class="reasons">
+                <h3>Security indicators</h3>
+
+                <ul>
+                    {% for reason in result.reasons %}
+                    <li>{{ reason }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% else %}
+
+            <div class="safe-message">
+                No common phishing indicators were detected.
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+
+        <section class="info-grid">
+
+            <div class="info-card">
+                <span>01</span>
+                <h3>Analyze</h3>
+                <p>
+                    Examines the URL for suspicious characteristics.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <span>02</span>
+                <h3>Score</h3>
+                <p>
+                    Calculates a risk score based on detected indicators.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <span>03</span>
+                <h3>Explain</h3>
+                <p>
+                    Shows the reasons behind the security assessment.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>PhishGuard • Cybersecurity Project</p>
+        <p>Built with Python & Flask</p>
+    </footer>
+
+</body>
+</html>
